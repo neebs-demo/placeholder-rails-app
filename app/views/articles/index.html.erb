@@ -1,0 +1,96 @@
+<div class="articles">
+  <div class="header">
+    <h1>Blog Articles</h1>
+    <%= link_to "Write New Article", new_article_path, class: "button" %>
+  </div>
+
+  <% if @articles.any? %>
+    <div class="articles-list">
+      <% @articles.each do |article| %>
+        <article class="article-card">
+          <h2><%= link_to article.title, article_path(article) %></h2>
+          <div class="article-meta">
+            <span class="date">Posted <%= time_ago_in_words(article.created_at) %> ago</span>
+            <span class="comments"><%= pluralize(article.comments.count, 'comment') %></span>
+          </div>
+          <div class="preview">
+            <%= truncate(article.content, length: 200) %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="no-articles">No articles yet. Be the first to write one!</p>
+  <% end %>
+</div>
+
+<% content_for :styles do %>
+  <style>
+    .articles {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background: #0056b3;
+    }
+
+    .article-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .article-card h2 {
+      margin: 0 0 10px 0;
+    }
+
+    .article-card h2 a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .article-card h2 a:hover {
+      color: #007bff;
+    }
+
+    .article-meta {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    .article-meta span {
+      margin-right: 15px;
+    }
+
+    .preview {
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .no-articles {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+<% end %>

@@ -1,0 +1,13 @@
+<%= turbo_stream.prepend "comments" do %>
+  <%= render @comment %>
+<% end %>
+
+<%= turbo_stream.update "new_comment" do %>
+  <%= form_with(model: [@article, Comment.new], local: false) do |f| %>
+    <div class="field">
+      <%= f.text_area :content, rows: 3, placeholder: "Write your comment here..." %>
+    </div>
+
+    <%= f.submit "Post Comment", class: "button" %>
+  <% end %>
+<% end %>

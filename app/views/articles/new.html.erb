@@ -1,0 +1,122 @@
+<div class="new-article">
+  <h1>Write New Article</h1>
+
+  <%= form_with(model: @article, local: true, class: "article-form") do |f| %>
+    <% if @article.errors.any? %>
+      <div class="error-messages">
+        <h2><%= pluralize(@article.errors.count, "error") %> prevented this article from being saved:</h2>
+        <ul>
+          <% @article.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, placeholder: "Enter article title" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :content %>
+      <%= f.text_area :content, rows: 10, placeholder: "Write your article content here..." %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Publish Article", class: "button" %>
+      <%= link_to "Cancel", articles_path, class: "button cancel" %>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :styles do %>
+  <style>
+    .new-article {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .article-form {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+    }
+
+    .error-messages {
+      color: #721c24;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .error-messages h2 {
+      font-size: 1.1em;
+      margin: 0 0 10px 0;
+    }
+
+    .error-messages ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .field input[type="text"],
+    .field textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+
+    .field textarea {
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    input[type="submit"].button {
+      background: #28a745;
+      color: white;
+    }
+
+    input[type="submit"].button:hover {
+      background: #218838;
+    }
+
+    .button.cancel {
+      background: #6c757d;
+      color: white;
+    }
+
+    .button.cancel:hover {
+      background: #5a6268;
+    }
+  </style>
+<% end %>

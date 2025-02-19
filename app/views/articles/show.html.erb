@@ -1,0 +1,117 @@
+<div class="article-show">
+  <div class="article-content">
+    <div class="article-header">
+      <h1><%= @article.title %></h1>
+      <div class="article-meta">
+        Posted <%= time_ago_in_words(@article.created_at) %> ago
+      </div>
+    </div>
+
+    <div class="article-body">
+      <%= simple_format(@article.content) %>
+    </div>
+
+    <%= link_to "← Back to Articles", articles_path, class: "back-link" %>
+  </div>
+
+  <div class="comments-section">
+    <h2>Comments (<%= @article.comments.count %>)</h2>
+
+    <%= turbo_frame_tag "comments" do %>
+      <div class="comments-list">
+        <%= render @article.comments.order(created_at: :desc) %>
+      </div>
+    <% end %>
+
+    <div class="comment-form">
+      <h3>Add a Comment</h3>
+      <%= form_with(model: [@article, @comment], local: false) do |f| %>
+        <div class="field">
+          <%= f.text_area :content, rows: 3, placeholder: "Write your comment here..." %>
+        </div>
+
+        <%= f.submit "Post Comment", class: "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% content_for :styles do %>
+  <style>
+    .article-show {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .article-header {
+      margin-bottom: 30px;
+    }
+
+    .article-meta {
+      color: #666;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    .article-body {
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #666;
+      text-decoration: none;
+      margin-bottom: 40px;
+    }
+
+    .back-link:hover {
+      color: #333;
+    }
+
+    .comments-section {
+      border-top: 1px solid #ddd;
+      padding-top: 30px;
+    }
+
+    .comments-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .comments-list {
+      margin-bottom: 30px;
+    }
+
+    .comment-form h3 {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+    }
+
+    .comment-form .field {
+      margin-bottom: 15px;
+    }
+
+    .comment-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    .button {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    .button:hover {
+      background: #0056b3;
+    }
+  </style>
+<% end %>
