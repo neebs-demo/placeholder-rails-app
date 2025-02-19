@@ -55,6 +55,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
 
     services:
       postgres:
@@ -81,7 +83,6 @@ jobs:
 
       - name: Run tests
         env:
-          RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
         run: |
           bin/rails db:create
