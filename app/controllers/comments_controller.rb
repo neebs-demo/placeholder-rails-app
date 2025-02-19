@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        # placeholder
         format.turbo_stream
         format.html { redirect_to @article, notice: "Comment was successfully added." }
       else
