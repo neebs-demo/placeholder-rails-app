@@ -6,6 +6,23 @@ on:
     branches: [ main ]
 
 jobs:
+  basic_cmd_test:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Some bash commands
+        run: |
+          echo "Hello world"
+          echo "-----"
+          ls
+          echo "-----"
+          pwd
+          echo "-----"
+          echo "123123123" > /tmp/foo.txt
+          cat /tmp/foo.txt
+          echo "-----"
+
   scan_ruby:
     runs-on: self-hosted
 
