@@ -30,6 +30,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Packages for Ruby Setup
+        run: |
+          # pg: libq-dev
+          # psych: libyaml-dev
+          sudo apt-get install -y \
+            libpq-dev \
+            libyaml-dev
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -46,6 +54,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Packages for Ruby Setup
+        run: |
+          # pg: libq-dev
+          # psych: libyaml-dev
+          sudo apt-get install -y \
+            libpq-dev \
+            libyaml-dev
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -60,6 +76,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install Packages for Ruby Setup
+        run: |
+          # pg: libq-dev
+          # psych: libyaml-dev
+          sudo apt-get install -y \
+            libpq-dev \
+            libyaml-dev
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -96,6 +120,9 @@ jobs:
           # rails generated installation
           sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Install Packages for Ruby Setup
         run: |
           # pg: libq-dev
@@ -103,9 +130,6 @@ jobs:
           sudo apt-get install -y \
             libpq-dev \
             libyaml-dev
-
-      - name: Checkout code
-        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
