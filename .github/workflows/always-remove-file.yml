@@ -1,0 +1,45 @@
+name: Always Remove CODEOWNERS from test environments
+
+on:
+  push:
+    branches: [uat, staging]
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  auto-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "write"
+      packages: "write"
+      actions: "read"
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Git Configuration
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - name: Remove CODEOWNERS and push of any found
+        run: |
+          FOUND_FILES=$(find . -name "CODEOWNERS")
+          echo "Found files ${FOUND_FILES}"
+          if [[ -n "${FOUND_FILES}" ]]; then
+            echo "Found CODEOWNERS files"
+            echo "found_files=${FOUND_FILES}" >> "$GITHUB_OUTPUT"
+            find . -name "CODEOWNERS" | xargs rm
+            git add -A
+            # [skip ci] stops CI from triggering if the head of the commit wants 
+            git commit -m "Remove CODEOWNERS [skip ci]"
+            git push
+          else
+            echo "Files not found"
+          fi
