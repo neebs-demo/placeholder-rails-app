@@ -31,18 +31,20 @@ jobs:
         run: |
           # add a new commit (empty file)
           touch "$(uuidgen).txt" && git add -A && git commit -m "Some text file"
-      - name: See if push to master works
-        run: |
-          # push to master
-          git push
-      - name: See if push to staging works
+
+      - name: See if push to staging works (should work, has ruleset, valid bypass)
         run: |
           git switch staging
           git reset --hard origin/master
           git push --force
 
-      - name: See if push to uat works
+      - name: See if push to uat works (should work, has ruleset, valid bypass)
         run: |
           git switch uat
           git reset --hard origin/master
           git push --force
+
+      - name: See if push to master works (should fail, has ruleset, no valid bypass)
+        run: |
+          # push to master
+          git push
