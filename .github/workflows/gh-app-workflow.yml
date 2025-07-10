@@ -1,0 +1,48 @@
+name: GH-App AutoWorkflow
+
+on:
+  workflow_dispatch:
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  auto-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "write"
+      packages: "write"
+      actions: "read"
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Git Configuration
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - name: Additional mock commit
+        run: |
+          # add a new commit (empty file)
+          touch "$(uuidgen).txt" && git add -A && git commit -m "Some text file"
+      - name: See if push to master works
+        run: |
+          # push to master
+          git push
+      - name: See if push to staging works
+        run: |
+          git switch staging
+          git reset --hard origin/master
+          git push --force
+
+      - name: See if push to uat works
+        run: |
+          git switch uat
+          git reset --hard origin/master
+          git push --force
