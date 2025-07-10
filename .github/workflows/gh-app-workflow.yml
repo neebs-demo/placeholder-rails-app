@@ -35,16 +35,17 @@ jobs:
       - name: See if push to staging works (should work, has ruleset, valid bypass)
         run: |
           git switch staging
-          git reset --hard origin/master
+          git reset --hard origin/main
           git push --force
 
       - name: See if push to uat works (should work, has ruleset, valid bypass)
         run: |
           git switch uat
-          git reset --hard origin/master
+          git reset --hard origin/main
           git push --force
 
-      - name: See if push to master works (should fail, has ruleset, no valid bypass)
+      - name: See if push to trunk works (should fail, has ruleset, no valid bypass)
         run: |
-          # push to master
+          # push to trunk
+          git switch main
           git push
