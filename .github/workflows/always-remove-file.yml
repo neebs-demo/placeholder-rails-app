@@ -34,7 +34,6 @@ jobs:
           echo "Found files ${FOUND_FILES}"
           if [[ -n "${FOUND_FILES}" ]]; then
             echo "Found CODEOWNERS files"
-            echo "found_files=${FOUND_FILES}" >> "$GITHUB_OUTPUT"
             find . -name "CODEOWNERS" | xargs rm
             git add -A
             # [skip ci] stops CI from triggering if the head of the commit wants 
