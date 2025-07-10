@@ -3,11 +3,11 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   basic_cmd_test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
           echo "-----"
 
   scan_ruby:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -48,7 +48,7 @@ jobs:
         run: bin/brakeman --no-pager
 
   scan_js:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -72,7 +72,7 @@ jobs:
         run: bin/importmap audit
 
   lint:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -95,7 +95,7 @@ jobs:
         run: bin/rubocop -f github
 
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
 
